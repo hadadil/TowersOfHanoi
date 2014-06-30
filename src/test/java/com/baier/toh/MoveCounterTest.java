@@ -1,38 +1,52 @@
 package com.baier.toh;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import javax.naming.TimeLimitExceededException;
-
-import org.junit.Before;
 import org.junit.Test;
 
-
 public class MoveCounterTest {
-	MoveCounter mc1,mc2;
-
-	@Before
-	public void setUp() throws Exception {
-		mc1 = new MoveCounter();
-		mc2 = new MoveCounter();
-	}
 
 	@Test
 	public void towersOfHanoi_5discTest() {
-		assertEquals(31, mc1.countMovesForDisc(5));
-	}
-	
-	@Test
-	public void towersOfHanoi_MultipleTestWithSameNumber() {
-		assertEquals(7, mc1.countMovesForDisc(3));
-		assertEquals(7, mc2.countMovesForDisc(3));	
-	}
-	
-	@Test(timeout=30000)
-	public void towersOfHanoi_64disc() throws TimeLimitExceededException {
-			assertEquals("will fail", 31, mc1.countMovesForDisc(64));
-		
+		// given
+		MoveCounter moveCounter = givenWeHaveMoveCounter();
+
+		// when
+		int actual = moveCounter.countMovesForDisc(5);
+		// then
+
+		assertEquals(31, actual);
 	}
 
-	
+	@Test
+	public void towersOfHanoi_MultipleTestWithSameNumber() {
+		// given
+		MoveCounter moveCounter = givenWeHaveMoveCounter();
+		MoveCounter moveCounter2 = givenWeHaveMoveCounter();
+
+		// when
+		int actual = moveCounter.countMovesForDisc(3);
+		int actual2 = moveCounter2.countMovesForDisc(3);
+
+		// then
+		assertEquals(7, actual);
+		assertEquals(7, actual2);
+	}
+
+	@Test(timeout = 30000)
+	public void towersOfHanoi_64disc() {
+		// given
+		MoveCounter moveCounter = givenWeHaveMoveCounter();
+		
+		// when
+		moveCounter.countMovesForDisc(64);
+		
+		//then
+		//? timeout, why?
+	}
+
+	private MoveCounter givenWeHaveMoveCounter() {
+		return new MoveCounter();
+	}
+
 }
